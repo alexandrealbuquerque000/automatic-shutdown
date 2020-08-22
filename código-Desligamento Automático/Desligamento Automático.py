@@ -1,5 +1,5 @@
 
-import pyautogui
+import os
 import time
 
 #Função para ler apenas letras:
@@ -36,23 +36,11 @@ def initshow():
     print("-"*27)
 
 
-#Função para abrir terminal:
-def terminal():
-    global timesys
-    pyautogui.hotkey("win")
-    time.sleep(timesys)
-    pyautogui.typewrite("cmd")
-    time.sleep(timesys)
-    pyautogui.press("Enter")
-    time.sleep(timesys)
-
-
 def options():
     perg=str("Deseja marcar um tempo de desligamento ou reinicialização automática ou cancelar alguma predefinição já existente? ")
     perg=leiastr(perg)
     if "can" in perg:
-        terminal()
-        pyautogui.typewrite("shutdown -a")
+        os.system("shutdown -a")
     else:
         if "re" in perg:
             tempoff=str("Digite em quantos minutos deseja que o computador reinicie: ")
@@ -60,33 +48,26 @@ def options():
             tempoff=str("Digite em quantos minutos deseja que o computador desligue: ")
         tempoff=leiafloat(tempoff)
         tempoff=float(tempoff)
-        terminal()
         if  "re" in perg:
-            pyautogui.typewrite(f"shutdown -r -t {int(tempoff*60)}")
+            os.system(f"shutdown -r -t {int(tempoff*60)}")
         else:
-            pyautogui.typewrite(f"shutdown -s -t {int(tempoff*60)}")   
+            os.system(f"shutdown -s -t {int(tempoff*60)}")   
 
 
 def end():
-    time.sleep(timesys/2)
-    pyautogui.press("Enter")
-    time.sleep(timesys/2)
-    pyautogui.hotkey("Alt", "F4")
+    time.sleep(1)
     print()
     print("Operação feita com sucesso!")
     input()
 
 
-def run():
-    global timesys
-
-    timesys=1
+def program():
     initshow()
     options()
     end()
 
 
-run()
+program()
 
 
 
